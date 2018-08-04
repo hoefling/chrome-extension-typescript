@@ -1,46 +1,47 @@
-namespace Dimitry.Extension{
-    export class HelloPageActionController{
+import {FunData} from "../_services/FunData";
+import {Factory} from "../Factory";
 
-        private txtHeader : HTMLElement;
-        private inputMain : HTMLInputElement;
-        private btnHello  : HTMLButtonElement;
-        private btnRequestAsync : HTMLButtonElement;
-        private funData: FunData;
+export class HelloPageActionController {
 
-        constructor(){
-            this.funData = Factory.getFunData();
-        }
+    private txtHeader: HTMLElement;
+    private inputMain: HTMLInputElement;
+    private btnHello: HTMLButtonElement;
+    private btnRequestAsync: HTMLButtonElement;
+    private funData: FunData;
 
-        initialize(rootElement: Element){
-            // TODO: wire up all the shit
-            var root = rootElement;
+    constructor() {
+        this.funData = Factory.getFunData();
+    }
 
-            this.txtHeader = <HTMLElement> root.querySelector('.txtHeader');
-            this.inputMain = <HTMLInputElement> root.querySelector('.inputMain');
-            this.btnHello  = <HTMLButtonElement> root.querySelector('.btnHello');
-            this.btnRequestAsync = root.querySelector('.btnRequestAsync') as HTMLButtonElement;
+    initialize(rootElement: Element) {
+        // TODO: wire up all the shit
+        var root = rootElement;
 
-            // this.inputMain.addEventListener('keyup' , () => {
-            this.inputMain.addEventListener('input' , () => {
-                this.txtHeader.innerText = this.inputMain.value;
-            });
+        this.txtHeader = <HTMLElement> root.querySelector('.txtHeader');
+        this.inputMain = <HTMLInputElement> root.querySelector('.inputMain');
+        this.btnHello = <HTMLButtonElement> root.querySelector('.btnHello');
+        this.btnRequestAsync = root.querySelector('.btnRequestAsync') as HTMLButtonElement;
+
+        // this.inputMain.addEventListener('keyup' , () => {
+        this.inputMain.addEventListener('input', () => {
+            this.txtHeader.innerText = this.inputMain.value;
+        });
 
 
-            this.btnRequestAsync.addEventListener('click', () => {
-                this.txtHeader.innerText = 'Requesting background data...';
-                this.funData.get().then( (result)=>{
+        this.btnRequestAsync.addEventListener('click', () => {
+            this.txtHeader.innerText = 'Requesting background data...';
+            this.funData.get().then((result) => {
                     this.txtHeader.innerText = result.toString();
-                }, 
-                (e)=>{
+                },
+                (e) => {
                     console.error(e);
                 });
-            });
+        });
 
-            this.btnHello.addEventListener('click', () => {
-                window.alert('Hello pressed');
-            });
+        this.btnHello.addEventListener('click', () => {
+            window.alert('Hello pressed');
+        });
 
 
-        }
     }
 }

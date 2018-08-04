@@ -1,5 +1,7 @@
+import {ContentController} from "../../src/content/ContentController";
+
 (function(){
     console.log('Running injected code');
-    var controller = new Dimitry.Extension.ContentController();
+    const controller = new ContentController();
     controller.initialize();
 })();

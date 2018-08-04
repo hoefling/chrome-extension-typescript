@@ -1,69 +1,71 @@
-namespace Dimitry.Extension{
-    export class HelloBrowserActionController{
+import {Promisify} from "../_services/Promisify";
+import {FunData} from "../_services/FunData";
+import {Factory} from "../Factory";
 
-        private txtHeader : HTMLElement;
-        private inputMain : HTMLInputElement;
-        private btnReplaceTags  : HTMLButtonElement;
-        private btnRequestAsync : HTMLButtonElement;
-        private funData: FunData;
+export class HelloBrowserActionController {
 
-        private promisify: Promisify;
+    private txtHeader: HTMLElement;
+    private inputMain: HTMLInputElement;
+    private btnReplaceTags: HTMLButtonElement;
+    private btnRequestAsync: HTMLButtonElement;
+    private funData: FunData;
 
-        private chromeTabsSendMessage : any;
-        private chromeTabsQuery : any;
+    private promisify: Promisify;
 
-        constructor(){
-            this.funData = Factory.getFunData();
-            this.promisify = Factory.getPromisify();
+    private chromeTabsSendMessage: any;
+    private chromeTabsQuery: any;
 
-            this.chromeTabsSendMessage = this.promisify.promisify3(chrome.tabs.sendMessage);
-            this.chromeTabsQuery       = this.promisify.promisify2(chrome.tabs.query);
-        }
+    constructor() {
+        this.funData = Factory.getFunData();
+        this.promisify = Factory.getPromisify();
 
-        initialize(rootElement: Element){
-            // TODO: wire up all the shit
-            var root = rootElement;
+        this.chromeTabsSendMessage = this.promisify.promisify3(chrome.tabs.sendMessage);
+        this.chromeTabsQuery = this.promisify.promisify2(chrome.tabs.query);
+    }
 
-            this.txtHeader = <HTMLElement> root.querySelector('.txtHeader');
-            this.inputMain = <HTMLInputElement> root.querySelector('.inputMain');
-            this.btnReplaceTags  = <HTMLButtonElement> root.querySelector('.btnReplaceTags');
-            this.btnRequestAsync = root.querySelector('.btnRequestAsync') as HTMLButtonElement;
+    initialize(rootElement: Element) {
+        // TODO: wire up all the shit
+        var root = rootElement;
 
-            // this.inputMain.addEventListener('keyup' , () => {
-            this.inputMain.addEventListener('input' , () => {
-                this.txtHeader.innerText = this.inputMain.value;
-            });
+        this.txtHeader = <HTMLElement> root.querySelector('.txtHeader');
+        this.inputMain = <HTMLInputElement> root.querySelector('.inputMain');
+        this.btnReplaceTags = <HTMLButtonElement> root.querySelector('.btnReplaceTags');
+        this.btnRequestAsync = root.querySelector('.btnRequestAsync') as HTMLButtonElement;
+
+        // this.inputMain.addEventListener('keyup' , () => {
+        this.inputMain.addEventListener('input', () => {
+            this.txtHeader.innerText = this.inputMain.value;
+        });
 
 
-            this.btnRequestAsync.addEventListener('click', () => {
-                this.txtHeader.innerText = 'Requesting background data...';
-                this.funData.get().then( (result)=>{
+        this.btnRequestAsync.addEventListener('click', () => {
+            this.txtHeader.innerText = 'Requesting background data...';
+            this.funData.get().then((result) => {
                     this.txtHeader.innerText = result.toString();
                     Factory.getSimpleNotifications().alert('Received result: ' + result.toString());
-                }, 
-                (e)=>{
+                },
+                (e) => {
                     console.error(e);
                 });
+        });
+
+        this.btnReplaceTags.addEventListener('click', () => this.onReplaceThingsAction());
+
+    }
+
+    onReplaceThingsAction() {
+
+        let opt = {active: true, currentWindow: true};
+        this.chromeTabsQuery(opt)
+            .then((tabs: chrome.tabs.Tab[]) => {
+                if (tabs.length < 1) {
+                    window.alert('No active current tab in current window, maybe not http(s) page opened?');
+                    throw new Error('No active current tab in current window, maybe not http(s) page opened?');
+                }
+                return this.chromeTabsSendMessage(tabs[0].id, {action: 'ui'})
+            })
+            .then(() => {
+                console.info('Message was sent from browser action');
             });
-
-            this.btnReplaceTags.addEventListener('click', () => this.onReplaceThingsAction() );
-
-        }
-
-        onReplaceThingsAction(){
-
-                let opt = { active: true, currentWindow: true};
-                this.chromeTabsQuery(opt)
-                    .then( (tabs : chrome.tabs.Tab[]) => {
-                        if ( tabs.length < 1 ){
-                            window.alert('No active current tab in current window, maybe not http(s) page opened?');
-                            throw new Error('No active current tab in current window, maybe not http(s) page opened?');
-                        }
-                        return this.chromeTabsSendMessage(tabs[0].id, { action: 'ui'})
-                    })
-                    .then(()=>{
-                        console.info('Message was sent from browser action');
-                    });
-        }
     }
 }

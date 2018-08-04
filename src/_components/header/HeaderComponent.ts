@@ -1,35 +1,32 @@
-/// <reference path="../../Components.ts"/>
+import {components, IComponent} from "../../Components";
 
-namespace Dimitry.Extension{
+export class HeaderComponent implements IComponent {
 
-    export class HeaderComponent implements IComponent{
+    name: string = 'header';
 
-        name: string = 'header';
+    tag: string = 'dk-header';
 
-        tag:  string = 'dk-header';
-
-        template =  `
+    template = `
         <header>
            this is header
         </header>
         `;
 
-        templateUrl  = '';
+    templateUrl = '';
 
-        constructor() {
+    constructor() {
 
-        }
-
-        load(el: Element) : Promise<any>{
-            return components.loadComponent(el, this);
-        }
-
-        onLoad(){
-            console.log(`onLoad() for component ${this.name}`);
-        }
-
-        
     }
 
-    Dimitry.Extension.components.register(new HeaderComponent());
+    load(el: Element): Promise<any> {
+        return components.loadComponent(el, this);
+    }
+
+    onLoad() {
+        console.log(`onLoad() for component ${this.name}`);
+    }
+
+
 }
+
+components.register(new HeaderComponent());

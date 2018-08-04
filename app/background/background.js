@@ -1,3 +1,5 @@
+import {BackgroundController} from "../../src/background/BackgroundController";
+
 (function(){
     "use strict";
 
@@ -5,6 +7,6 @@
 
     console.log('loading background page');
 
-    var controller = new Dimitry.Extension.BackgroundController();
+    const controller = new BackgroundController();
     controller.initialize();
 })();

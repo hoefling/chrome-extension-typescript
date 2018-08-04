@@ -1,42 +1,45 @@
-namespace Dimitry.Extension{
-    export class Factory{
+import {SimpleStore} from "./_services/SimpleStore";
+import {SimpleNotifications} from "./_services/SimpleNotifications";
+import {FunData} from "./_services/FunData";
+import {Promisify} from "./_services/Promisify";
 
-        private static funData : FunData;
-        private static simpleStore: SimpleStore;
-        private static simpleNotifications : SimpleNotifications;
+export class Factory {
 
-        private static promisify : Promisify;
+    private static funData: FunData;
+    private static simpleStore: SimpleStore;
+    private static simpleNotifications: SimpleNotifications;
 
-        public static getPromisify() : Promisify {
-            if ( !Factory.promisify ){
-                Factory.promisify = new Promisify();
-            }
+    private static promisify: Promisify;
 
-            return Factory.promisify;
+    public static getPromisify(): Promisify {
+        if (!Factory.promisify) {
+            Factory.promisify = new Promisify();
         }
 
-        public static getFunData() : FunData{
-            if ( ! Factory.funData ){
-                Factory.funData = new FunData();
-            }
-            return Factory.funData;
-        }
-
-        public static getSimpleNotifications() : SimpleNotifications {
-            if ( ! Factory.simpleNotifications ){
-                Factory.simpleNotifications = new SimpleNotifications();
-            }
-            return Factory.simpleNotifications;
-        }
-
-        
-        public static getSimpleStore() : SimpleStore {
-            if ( ! Factory.simpleStore ){
-                Factory.simpleStore = new SimpleStore(chrome.storage.sync);
-            }
-            return Factory.simpleStore;
-        }
-
-  
+        return Factory.promisify;
     }
+
+    public static getFunData(): FunData {
+        if (!Factory.funData) {
+            Factory.funData = new FunData();
+        }
+        return Factory.funData;
+    }
+
+    public static getSimpleNotifications(): SimpleNotifications {
+        if (!Factory.simpleNotifications) {
+            Factory.simpleNotifications = new SimpleNotifications();
+        }
+        return Factory.simpleNotifications;
+    }
+
+
+    public static getSimpleStore(): SimpleStore {
+        if (!Factory.simpleStore) {
+            Factory.simpleStore = new SimpleStore(chrome.storage.sync);
+        }
+        return Factory.simpleStore;
+    }
+
+
 }
