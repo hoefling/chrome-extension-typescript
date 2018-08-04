@@ -19,6 +19,12 @@ Now load the `dist/` directory in Chrome:
 
 `webpack` will watch for file changes and update the dist files automatically.
 
+### Tests
+
+```sh
+$ yarn run test
+```
+
 ### Distribution
 
 ```sh
