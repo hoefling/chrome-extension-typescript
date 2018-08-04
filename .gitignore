@@ -3,3 +3,4 @@ dist/
 var/
 node_modules/
 .vscode/symbols.json
+.idea/workspace.xml
