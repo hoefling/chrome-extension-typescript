@@ -32,3 +32,8 @@ $ yarn run test
 ```sh
 yarn bun build
 ```
+
+### Stats
+
+[![Build Status](https://travis-ci.org/hoefling/chrome-extension-typescript.svg?branch=master)](https://travis-ci.org/hoefling/chrome-extension-typescript)
+[![Coverage Status](https://coveralls.io/repos/github/hoefling/chrome-extension-typescript/badge.svg?branch=master)](https://coveralls.io/github/hoefling/chrome-extension-typescript?branch=master)
