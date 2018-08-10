@@ -4,3 +4,5 @@ var/
 node_modules/
 .vscode/symbols.json
 .idea/workspace.xml
+reports/
+yarn-error.log
