@@ -21,6 +21,8 @@ Now load the `dist/` directory in Chrome:
 
 ### Tests
 
+Tests are run with Karma + Mocha + Chai. Coverage + JUnit reporters will store reports in the `reports/` dir.
+
 ```sh
 $ yarn run test
 ```
