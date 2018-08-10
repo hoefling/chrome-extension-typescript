@@ -1,0 +1,22 @@
+{
+  "include": [
+    "_locales/**/*",
+    "app/**/*",
+    "res/**/*",
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "compilerOptions": {
+    "outDir": "../dist",
+    "target": "es2018",
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "module": "commonjs",
+    "allowJs": true,
+    "watch": true,
+    "sourceMap": true
+  }
+}
