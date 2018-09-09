@@ -32,7 +32,7 @@ module.exports = (config) => {
     config.set({
         basePath: '',
         frameworks: ['mocha', 'chai'],
-        files: ['tests/**/*.spec.ts'],
+        files: ['tests/test.ts', 'tests/**/*.spec.ts'],
         exclude: [],
         mime: {
             'text/x-typescript': ['ts', 'tsx']
